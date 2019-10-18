@@ -10,10 +10,10 @@ function ContribuyentePanel() {
         <div>
             <Layout style={{ height: "calc(100vh - 55px)" }}>
                 <Content style={{ padding: '0 50px' }}>
-                    <Row type="flex" gutter={16}>
+                  
+                        <Row type="flex" gutter={16}>
                         <Col>
-                            <h2>Panel de contribuyente</h2>
-                            <Link to={`/crearpersona`}>Ver autorizaciones</Link>
+                            <Link to={`/verautorizaciones`}>Ver autorizaciones</Link>
                         </Col>
                     </Row>
                 </Content>

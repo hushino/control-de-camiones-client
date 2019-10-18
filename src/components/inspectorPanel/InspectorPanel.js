@@ -12,8 +12,8 @@ function InspectorPanel() {
                 <Content style={{ padding: '0 50px' }}>
                     <Row type="flex" gutter={16}>
                         <Col>
-                            <h2>Panel de administración</h2>
-                            <Link to={`/crearpersona`}>Enviar comprobante de ingreso</Link>
+                            <h2>Panel de contribuyente</h2>
+                            <Link to={`/crearSolicitud`}>Crear solicitud de pase de camion</Link>
                         </Col>
                     </Row>
                 </Content>
