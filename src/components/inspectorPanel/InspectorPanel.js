@@ -114,14 +114,14 @@ function InspectorPanel(props) {
                 payload.cuit = values.cuit
                 payload.vehiculomodelo = values.vehiculomodelo
                 payload.infogeneral = values.infogeneral
-               /*  payload.fotocamion = values.fotocamion
-                payload.fotopatente = values.fotopatente */
+               /*payload.fotocamion = values.fotocamion
+                payload.fotopatente = values.fotopatente*/
 
                 for (let value of uploadImage.getAll('image')) {
                     //console.log('asd ' + value);
                     bodyFormDataPatente.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
                     setUploadImage(bodyFormDataPatente)
-                    
+
                     bodyFormDataCamion.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
                     setUploadImage(bodyFormDataCamion)
                 }
