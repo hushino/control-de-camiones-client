@@ -20,7 +20,7 @@ function App() {
     if (isSubscribed) {
       const fetchData = async () => {
         reduxsub = store.subscribe(async () => {
-          const response = await axios.get('http://localhost:8081/controlcamiones-server/api/', {
+          const response = await axios.get('http://localhost:8081/api/', {
             headers: {
               Authorization: store.getState().Authorization
             }

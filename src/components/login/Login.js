@@ -13,7 +13,7 @@ function Login(props) {
   //const [role, setRole] = useState()
   //const [state, setState] = useState("nani")
 
-  const isAnyRole = localStorage.getItem("role") === 'USER' || localStorage.getItem("role") === "ADMIN";
+  const isAnyRole = localStorage.getItem("role") === 'ADMIN' || localStorage.getItem("role") === "CONTRIBUYENTE" || localStorage.getItem("role") === "INSPECTOR";
   //console.log(props);
   const payload = {
     usernameOrEmail: "user@gmail.comm",
