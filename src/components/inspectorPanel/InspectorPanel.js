@@ -17,7 +17,9 @@ function InspectorPanel(props) {
         patente: "nombrefake",
         cuit: "nombrefake",
         infogeneral: "nombrefakefoto",
-        foto: "nombre",
+        fotocamion: "nombre",
+        fotopatente: "nombre",
+        vehiculomodelo: "nombre",
     }
 
     function beforeUpload(file) {
@@ -36,7 +38,8 @@ function InspectorPanel(props) {
         return isJpgOrPng && isLt2M;
     }
 
-    let bodyFormData = new FormData();
+    let bodyFormDataPatente = new FormData();
+    let bodyFormDataCamion = new FormData();
     const reader = new FileReader();
     function getBase64(img, callback) {
 
@@ -56,8 +59,8 @@ function InspectorPanel(props) {
         if (info.file.status === 'done') {
             message.success(`${info.file.name} imagen cargada exitosamente`);
 
-            bodyFormData.append('image', new Blob([info.file.originFileObj], { type: 'image/jpg' }));
-            setUploadImage(bodyFormData)
+            bodyFormDataPatente.append('image', new Blob([info.file.originFileObj], { type: 'image/jpg' }));
+            setUploadImage(bodyFormDataPatente)
 
             getBase64(info.file.originFileObj, imageUrl =>
                 setImagestate({
@@ -90,7 +93,8 @@ function InspectorPanel(props) {
             //console.log(response.data.filename)
             if (response.data.filename !== undefined) {
                 //data.foto = response.data.filename
-                payload.foto = response.data.filename
+                payload.fotopatente = response.data.filename
+                payload.fotocamion = response.data.filename
             }
             //payload.foto = response.data.filename
             postData()
@@ -109,13 +113,16 @@ function InspectorPanel(props) {
                 payload.patente = values.patente
                 payload.cuit = values.cuit
                 payload.infogeneral = values.infogeneral
+               /*  payload.fotocamion = values.fotocamion
+                payload.fotopatente = values.fotopatente */
+                payload.vehiculomodelo = values.vehiculomodelo
 
                 for (let value of uploadImage.getAll('image')) {
                     //console.log('asd ' + value);
-                    bodyFormData.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
-                    setUploadImage(bodyFormData)
+                    bodyFormDataPatente.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
+                    setUploadImage(bodyFormDataPatente)
                 }
-                postImage(bodyFormData)
+                postImage(bodyFormDataPatente)
             }
         });
     };
@@ -130,7 +137,9 @@ function InspectorPanel(props) {
                             <h2>Panel de contribuyente</h2>
                             <Link to={`/crearSolicitud`}>Crear solicitud de pase de camion</Link>
                         </Col>
-                    </Row> */}
+                    </Row> */
+                    
+                    }
                     <Form onSubmit={handleSubmit} className="update-form" >
 
                         <Form.Item label="Patente" >
@@ -163,9 +172,19 @@ function InspectorPanel(props) {
                                 />,
                             )}
                         </Form.Item>
+                        <Form.Item label="Vehiculo modelo">
+                            {getFieldDecorator('vehiculomodelo', {
+                                rules: [{ required: true, message: 'Ingrese un dato!' }],
+                            })(
+                                <Input
+                                    type="text"
+                                    placeholder="vehiculomodelo"
+                                />,
+                            )}
+                        </Form.Item>
 
-                        <Form.Item label="Foto" >
-                            {getFieldDecorator('foto', {
+                        <Form.Item label="Foto de patente" >
+                            {getFieldDecorator('fotopatente', {
                                 rules: [{ required: true, message: 'Suba un archivo' }],
                             })(
                                 <Upload
@@ -178,6 +197,23 @@ function InspectorPanel(props) {
                                     onChange={handleChange}
                                 >
                                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                                </Upload>,
+                            )}
+                        </Form.Item>
+                        <Form.Item label="Foto del camion" >
+                            {getFieldDecorator('fotocamion', {
+                                rules: [{ required: true, message: 'Suba un archivo' }],
+                            })(
+                                <Upload
+                                    name="avatar2"
+                                    listType="picture-card"
+                                    className="avatar-uploader"
+                                    showUploadList={false}
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    beforeUpload={beforeUpload}
+                                    onChange={handleChange}
+                                >
+                                    {imageUrl ? <img src={imageUrl} alt="avatar2" style={{ width: '100%' }} /> : uploadButton}
                                 </Upload>,
                             )}
                         </Form.Item>
