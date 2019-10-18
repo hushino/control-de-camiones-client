@@ -26,7 +26,6 @@ function Header() {
           <div className="ant-row">
             <div className="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-5 ant-col-lg-5 ant-col-xl-5 ant-col-xxl-4">
             </div>
-
             <Menu mode="horizontal">
               <Menu.Item key="mail" >
                 <Link to="/">
