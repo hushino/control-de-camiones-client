@@ -42,9 +42,9 @@ function App() {
     <React.Fragment>
       <PageHeader onBack={() => null} backIcon={<Icon type="appstore" />} title="Control de Camiones" subTitle="Bienvenido" />
 
-      <Row>
+      <Row type="flex">
         <Col span={1}></Col>
-        <Col span={12}>
+        <Col >
           <WrappedNormalLoginForm />
         </Col>
       </Row>
