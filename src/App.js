@@ -11,7 +11,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 
 function App() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([])
   const [role, setRole] = useState([])
   useEffect(() => {
     setRole(store.getState().Role)
