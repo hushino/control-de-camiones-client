@@ -112,17 +112,21 @@ function InspectorPanel(props) {
             if (!err) {
                 payload.patente = values.patente
                 payload.cuit = values.cuit
+                payload.vehiculomodelo = values.vehiculomodelo
                 payload.infogeneral = values.infogeneral
                /*  payload.fotocamion = values.fotocamion
                 payload.fotopatente = values.fotopatente */
-                payload.vehiculomodelo = values.vehiculomodelo
 
                 for (let value of uploadImage.getAll('image')) {
                     //console.log('asd ' + value);
                     bodyFormDataPatente.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
                     setUploadImage(bodyFormDataPatente)
+                    
+                    bodyFormDataCamion.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
+                    setUploadImage(bodyFormDataCamion)
                 }
                 postImage(bodyFormDataPatente)
+                postImage(bodyFormDataCamion)
             }
         });
     };
