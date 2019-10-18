@@ -40,11 +40,11 @@ function App() {
 
   return (
     <React.Fragment>
-      <PageHeader onBack={() => null} backIcon={<Icon type="appstore" />} title="RRHH" subTitle="Bienvenido" />
+      <PageHeader onBack={() => null} backIcon={<Icon type="appstore" />} title="Control de Camiones" subTitle="Bienvenido" />
 
       <Row>
         <Col span={1}></Col>
-        <Col span={6}>
+        <Col span={12}>
           <WrappedNormalLoginForm />
         </Col>
       </Row>
