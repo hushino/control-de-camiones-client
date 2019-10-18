@@ -7,7 +7,7 @@ import NoPageFound from '../noPageFound/NoPageFound';
 import store from '../../redux/store';
 import AdminPanel from '../adminPanel/AdminPanel';
 import ContribuyentePanel from '../contribuyentePanel/ContribuyentePanel';
-import InspectorPanel from '../inspectorPanel/InspectorPanel';
+import WrappedInspectorPanelForm from '../inspectorPanel/InspectorPanel';
 
 function Header() {
 
@@ -42,7 +42,6 @@ function Header() {
                     </Link>
                   </Menu.Item>
                   : ""
-
               }
               {
                 isRoleINSPECTOR
@@ -82,7 +81,7 @@ function Header() {
         }
         {
           isRoleINSPECTOR
-            ? <Route path="/inspector/" component={InspectorPanel} />
+            ? <Route path="/inspector/" component={WrappedInspectorPanelForm} />
             : ""
         }
         <Route component={NoPageFound} />
