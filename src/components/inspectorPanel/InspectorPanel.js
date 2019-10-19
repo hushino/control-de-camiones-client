@@ -10,7 +10,9 @@ const { Header, Footer, Sider, Content } = Layout;
 function InspectorPanel(props) {
 
     const [imagestate, setImagestate] = useState({ loading: false })
+    const [imagestate2, setImagestate2] = useState({ loading: false })
     const [uploadImage, setUploadImage] = useState({})
+    const [uploadImage2, setUploadImage2] = useState({})
     const { getFieldDecorator } = props.form;
 
     const payload = {
@@ -71,8 +73,38 @@ function InspectorPanel(props) {
         }
 
     };
+    const handleChange2 = info => {
+        /* if (payload.nombre === "" || isNaN(payload.nombre) || payload.nombre === null) {
+            message.error('Escribe un nombre primero !');
+            return;
+        } */
+        if (info.file.status === 'uploading') {
+            setImagestate2({ loading: true });
+            return;
+        }
+        if (info.file.status === 'done') {
+            message.success(`${info.file.name} imagen cargada exitosamente`);
 
+            bodyFormDataCamion.append('image', new Blob([info.file.originFileObj], { type: 'image/jpg' }));
+            setUploadImage2(bodyFormDataCamion)
+
+            getBase64(info.file.originFileObj, imageUrl =>
+                setImagestate2({
+                    imageUrl,
+                    loading: false,
+                }),
+            );
+        }
+
+    };
     const uploadButton = (
+        <div >
+            <Icon type={imagestate.loading ? 'loading' : 'plus'} />
+            <div className="ant-upload-text">Subir</div>
+            {/*  <img src={`http://localhost:3003/upload/image/` + data.foto} alt="avatar" style={{ width: '100%' }} /> */}
+        </div>
+    );
+    const uploadButton2 = (
         <div >
             <Icon type={imagestate.loading ? 'loading' : 'plus'} />
             <div className="ant-upload-text">Subir</div>
@@ -114,8 +146,8 @@ function InspectorPanel(props) {
                 payload.cuit = values.cuit
                 payload.vehiculomodelo = values.vehiculomodelo
                 payload.infogeneral = values.infogeneral
-               /*payload.fotocamion = values.fotocamion
-                payload.fotopatente = values.fotopatente*/
+                /*payload.fotocamion = values.fotocamion
+                 payload.fotopatente = values.fotopatente*/
 
                 for (let value of uploadImage.getAll('image')) {
                     //console.log('asd ' + value);
@@ -142,7 +174,7 @@ function InspectorPanel(props) {
                             <Link to={`/crearSolicitud`}>Crear solicitud de pase de camion</Link>
                         </Col>
                     </Row> */
-                    
+
                     }
                     <Form onSubmit={handleSubmit} className="update-form" >
 
@@ -204,7 +236,7 @@ function InspectorPanel(props) {
                                 </Upload>,
                             )}
                         </Form.Item>
-                        <Form.Item label="Foto del camion" >
+                        <Form.Item label="Foto del Camion" >
                             {getFieldDecorator('fotocamion', {
                                 rules: [{ required: true, message: 'Suba un archivo' }],
                             })(
@@ -215,9 +247,9 @@ function InspectorPanel(props) {
                                     showUploadList={false}
                                     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                     beforeUpload={beforeUpload}
-                                    onChange={handleChange}
+                                    onChange={handleChange2}
                                 >
-                                    {imageUrl ? <img src={imageUrl} alt="avatar2" style={{ width: '100%' }} /> : uploadButton}
+                                    {imageUrl ? <img src={imageUrl} alt="avatar2" style={{ width: '100%' }} /> : uploadButton2}
                                 </Upload>,
                             )}
                         </Form.Item>
