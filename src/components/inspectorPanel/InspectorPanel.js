@@ -87,7 +87,30 @@ function InspectorPanel(props) {
         }
 
     };
+    const handleChange2 = info => {
+        /* if (payload.nombre === "" || isNaN(payload.nombre) || payload.nombre === null) {
+            message.error('Escribe un nombre primero !');
+            return;
+        } */
+        if (info.file.status === 'uploading') {
+            setImagestate2({ loading: true });
+            return;
+        }
+        if (info.file.status === 'done') {
+            message.success(`${info.file.name} imagen cargada exitosamente`);
 
+            bodyFormDataPatente.append('image2', new Blob([info.file.originFileObj], { type: 'image/jpg' }));
+            setUploadImage2(bodyFormDataCamion)
+
+            getBase64(info.file.originFileObj, imageUrl2 =>
+                setImagestate2({
+                    imageUrl2,
+                    loading: false,
+                }),
+            );
+        }
+
+    };
 
     const uploadButton = (
         <div >
@@ -96,7 +119,13 @@ function InspectorPanel(props) {
             {/*  <img src={`http://localhost:3003/upload/image/` + data.foto} alt="avatar" style={{ width: '100%' }} /> */}
         </div>
     );
-
+    const uploadButton2 = (
+        <div >
+            <Icon type={imagestate2.loading ? 'loading' : 'plus'} />
+            <div className="ant-upload-text">Subir</div>
+            {/*  <img src={`http://localhost:3003/upload/image/` + data.foto} alt="avatar" style={{ width: '100%' }} /> */}
+        </div>
+    );
     const postData = () => axios.post(`http://localhost:8081/api/addSolicitudPaseCamion`, payload)
         .then(function (response) {
             console.log(response.data)
@@ -105,15 +134,16 @@ function InspectorPanel(props) {
             console.log(error);
         })
 
-    const postImage = (bodyFormData) => axios.post("http://localhost:3004/upload", bodyFormDataPatente)
+    const postImage = (bodyFormDataPatente, bodyFormDataCamion) => axios.post("http://localhost:3004/upload", bodyFormDataPatente, bodyFormDataCamion)
         .then(function (response) {
-            //console.log(response.data.filename)
-            postData()
-
+            console.log(response.data.filename)
             if (response.data.filename !== undefined) {
-                //data.foto = response.data.filename
+                payload.fotocamion = response.data.filename
                 payload.fotopatente = response.data.filename
             }
+            postData()
+
+
             //payload.foto = response.data.filename
         })
         .catch(function (response) {
@@ -122,6 +152,7 @@ function InspectorPanel(props) {
 
 
     const { imageUrl } = imagestate;
+    const { imageUrl2 } = imagestate2;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -134,15 +165,18 @@ function InspectorPanel(props) {
                 /*payload.fotocamion = values.fotocamion
                  payload.fotopatente = values.fotopatente*/
 
-                /*  for (let value of uploadImage.getAll('image')) {
-                     //console.log('asd ' + value);
-                     bodyFormDataPatente.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
-                     setUploadImage(bodyFormDataPatente)
- 
-                     bodyFormDataCamion.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
-                     setUploadImage(bodyFormDataCamion)
-                 } */
-                postImage(bodyFormDataPatente)
+                for (let value of uploadImage.getAll('image')) {
+                    console.log('asd ' + value);
+                    bodyFormDataPatente.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
+                    setUploadImage(bodyFormDataPatente)
+
+                }
+                for (let value of uploadImage2.getAll('image2')) {
+                    console.log('asd2 ' + value);
+                    bodyFormDataCamion.append('image2', new Blob([value], { type: 'image/jpg' }), payload.cuit + "AAAA" + payload.patente);
+                    setUploadImage2(bodyFormDataCamion)
+                }
+                postImage(bodyFormDataPatente, bodyFormDataCamion)
             }
         });
     };
@@ -150,7 +184,7 @@ function InspectorPanel(props) {
 
     return (
         <div>
-            <Layout style={{ height: "calc(100vh - 55px)" }}>
+            <Layout style={{ height: "calc(100vh + 200px)" }}>
                 <Content style={{ padding: '0 50px' }}>
                     {/* <Row type="flex" gutter={16}>
                         <Col>
@@ -217,6 +251,23 @@ function InspectorPanel(props) {
                                     onChange={handleChange}
                                 >
                                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                                </Upload>,
+                            )}
+                        </Form.Item>
+                        <Form.Item label="Foto de camion" >
+                            {getFieldDecorator('fotocamion', {
+                                rules: [{ required: true, message: 'Suba un archivo' }],
+                            })(
+                                <Upload
+                                    name="avatar"
+                                    listType="picture-card"
+                                    className="avatar-uploader"
+                                    showUploadList={false}
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    beforeUpload={beforeUpload2}
+                                    onChange={handleChange2}
+                                >
+                                    {imageUrl2 ? <img src={imageUrl2} alt="avatar" style={{ width: '100%' }} /> : uploadButton2}
                                 </Upload>,
                             )}
                         </Form.Item>
