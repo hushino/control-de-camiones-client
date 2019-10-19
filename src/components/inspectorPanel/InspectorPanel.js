@@ -18,7 +18,7 @@ function InspectorPanel(props) {
     const payload = {
         patente: "nombrefake",
         cuit: "nombrefake",
-        infogeneral: "nombrefakefoto",
+        infoadicional: "nombrefakefoto",
         fotocamion: "nombre",
         fotopatente: "nombre",
         vehiculomodelo: "nombre",
@@ -39,7 +39,21 @@ function InspectorPanel(props) {
         }
         return isJpgOrPng && isLt2M;
     }
+    function beforeUpload2(file) {
+        /* if (data.nombre === "" || data.nombre == undefined || data.nombre === null || data.nombre == NaN) {
+            message.error('Escribe un nombre primero !');
+        } */
 
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+            message.error('Solo puedes subir archivos JPG/PNG !');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+            message.error('La imagen debe pesar menos de 2MB!');
+        }
+        return isJpgOrPng && isLt2M;
+    }
     let bodyFormDataPatente = new FormData();
     let bodyFormDataCamion = new FormData();
     const reader = new FileReader();
@@ -73,38 +87,9 @@ function InspectorPanel(props) {
         }
 
     };
-    const handleChange2 = info => {
-        /* if (payload.nombre === "" || isNaN(payload.nombre) || payload.nombre === null) {
-            message.error('Escribe un nombre primero !');
-            return;
-        } */
-        if (info.file.status === 'uploading') {
-            setImagestate2({ loading: true });
-            return;
-        }
-        if (info.file.status === 'done') {
-            message.success(`${info.file.name} imagen cargada exitosamente`);
 
-            bodyFormDataCamion.append('image', new Blob([info.file.originFileObj], { type: 'image/jpg' }));
-            setUploadImage2(bodyFormDataCamion)
 
-            getBase64(info.file.originFileObj, imageUrl =>
-                setImagestate2({
-                    imageUrl,
-                    loading: false,
-                }),
-            );
-        }
-
-    };
     const uploadButton = (
-        <div >
-            <Icon type={imagestate.loading ? 'loading' : 'plus'} />
-            <div className="ant-upload-text">Subir</div>
-            {/*  <img src={`http://localhost:3003/upload/image/` + data.foto} alt="avatar" style={{ width: '100%' }} /> */}
-        </div>
-    );
-    const uploadButton2 = (
         <div >
             <Icon type={imagestate.loading ? 'loading' : 'plus'} />
             <div className="ant-upload-text">Subir</div>
@@ -120,16 +105,16 @@ function InspectorPanel(props) {
             console.log(error);
         })
 
-    const postImage = (bodyFormData) => axios.post("http://localhost:3004/upload", bodyFormData)
+    const postImage = (bodyFormData) => axios.post("http://localhost:3004/upload", bodyFormDataPatente)
         .then(function (response) {
             //console.log(response.data.filename)
+            postData()
+
             if (response.data.filename !== undefined) {
                 //data.foto = response.data.filename
                 payload.fotopatente = response.data.filename
-                payload.fotocamion = response.data.filename
             }
             //payload.foto = response.data.filename
-            postData()
         })
         .catch(function (response) {
             console.log(response);
@@ -145,20 +130,19 @@ function InspectorPanel(props) {
                 payload.patente = values.patente
                 payload.cuit = values.cuit
                 payload.vehiculomodelo = values.vehiculomodelo
-                payload.infogeneral = values.infogeneral
+                payload.infoadicional = values.infoadicional
                 /*payload.fotocamion = values.fotocamion
                  payload.fotopatente = values.fotopatente*/
 
-                for (let value of uploadImage.getAll('image')) {
-                    //console.log('asd ' + value);
-                    bodyFormDataPatente.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
-                    setUploadImage(bodyFormDataPatente)
-
-                    bodyFormDataCamion.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
-                    setUploadImage(bodyFormDataCamion)
-                }
+                /*  for (let value of uploadImage.getAll('image')) {
+                     //console.log('asd ' + value);
+                     bodyFormDataPatente.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
+                     setUploadImage(bodyFormDataPatente)
+ 
+                     bodyFormDataCamion.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
+                     setUploadImage(bodyFormDataCamion)
+                 } */
                 postImage(bodyFormDataPatente)
-                postImage(bodyFormDataCamion)
             }
         });
     };
@@ -199,12 +183,12 @@ function InspectorPanel(props) {
                             )}
                         </Form.Item>
                         <Form.Item label="Informacion adicional">
-                            {getFieldDecorator('infogeneral', {
+                            {getFieldDecorator('infoadicional', {
                                 rules: [{ required: true, message: 'Ingrese un dato!' }],
                             })(
                                 <Input
                                     type="text"
-                                    placeholder="infogeneral"
+                                    placeholder="infoadicional"
                                 />,
                             )}
                         </Form.Item>
@@ -236,23 +220,7 @@ function InspectorPanel(props) {
                                 </Upload>,
                             )}
                         </Form.Item>
-                        <Form.Item label="Foto del Camion" >
-                            {getFieldDecorator('fotocamion', {
-                                rules: [{ required: true, message: 'Suba un archivo' }],
-                            })(
-                                <Upload
-                                    name="avatar2"
-                                    listType="picture-card"
-                                    className="avatar-uploader"
-                                    showUploadList={false}
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                    beforeUpload={beforeUpload}
-                                    onChange={handleChange2}
-                                >
-                                    {imageUrl ? <img src={imageUrl} alt="avatar2" style={{ width: '100%' }} /> : uploadButton2}
-                                </Upload>,
-                            )}
-                        </Form.Item>
+
                         <Form.Item>
                             <Row></Row>
                             <Button type="primary" htmlType="submit" className="update-form-button" >
