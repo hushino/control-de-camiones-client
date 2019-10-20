@@ -42,8 +42,8 @@ function App() {
       <PageHeader onBack={() => null} backIcon={<Icon type="appstore" />} title="Control de Camiones" subTitle="Bienvenido" />
 
       <Row type="flex">
-        <Col span={1}></Col>
-        <Col >
+        <Col span={1} ></Col>
+        <Col span={9} >
           <WrappedNormalLoginForm />
         </Col>
       </Row>

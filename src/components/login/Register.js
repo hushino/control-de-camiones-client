@@ -79,6 +79,7 @@ function Register(props) {
     }
     return (
         <Row type="flex">
+            <Col span={1} ></Col>
             <Col span={12}>
                 {
                     isAnyRole
@@ -122,7 +123,7 @@ function Register(props) {
                                 })(
                                     <Input
                                         prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                        type="password"
+                                        type="text"
                                         placeholder="Contraseña"
                                     />,
                                 )}
