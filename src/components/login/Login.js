@@ -17,7 +17,9 @@ function Login(props) {
   //console.log(props);
   const payload = {
     usernameOrEmail: "user@gmail.comm",
-    password: "1233"
+    password: "1233",
+    celular: 34325343243,
+    cuit: 954643534
   };
 
   function imaginator(stateOfLife) {

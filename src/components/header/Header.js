@@ -8,6 +8,7 @@ import store from '../../redux/store';
 import AdminPanel from '../adminPanel/AdminPanel';
 import ContribuyentePanel from '../contribuyentePanel/ContribuyentePanel';
 import WrappedInspectorPanelForm from '../inspectorPanel/InspectorPanel';
+import WrappedNormalRegisterForm from '../login/Register';
 
 function Header() {
 
@@ -31,6 +32,12 @@ function Header() {
                 <Link to="/">
                   <Icon type="home" />
                   Inicio
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="registro" >
+                <Link to="/registro">
+                  <Icon type="home" />
+                  Registrarse
                 </Link>
               </Menu.Item>
               {
@@ -69,6 +76,7 @@ function Header() {
       </nav>
       <Switch>
         <Route path="/" exact component={App} />
+        <Route path="/registro" component={WrappedNormalRegisterForm} />
         {
           isRoleCONTRIBUYENTE
             ? <Route path="/contribuyente/" component={ContribuyentePanel} />

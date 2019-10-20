@@ -6,7 +6,6 @@ import axios from 'axios';
 import { PageHeader, Row, Col, Icon, Input, Button, Layout } from 'antd';
 import store from './redux/store'
 import WrappedNormalLoginForm from './components/login/Login';
-
 const { Header, Content, Footer, Sider } = Layout;
 
 
