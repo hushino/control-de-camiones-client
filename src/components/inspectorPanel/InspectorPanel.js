@@ -196,7 +196,7 @@ function InspectorPanel(props) {
             console.log(res.data)
             //console.log(res)
             payload.fotopatente = res.data[0].filename
-            payload.fotocamion = res.data[0].filename
+            //payload.fotocamion = res.data[0].filename
 
             onClickHandler2(data2)
         })
