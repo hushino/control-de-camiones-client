@@ -78,100 +78,99 @@ function Register(props) {
         window.location.reload();
     }
     return (
-
-        <div>
-            {
-                isAnyRole
-                    ? <Button type="danger" size="large" onClick={logout}>
-                        Desconectarse
+        <Row type="flex">
+            <Col span={12}>
+                {
+                    isAnyRole
+                        ? <Button type="danger" size="large" onClick={logout}>
+                            Desconectarse
                      </Button>
-                    : <Form onSubmit={handleSubmit} className="login-form">
-                        <Form.Item>
-                            {getFieldDecorator('nombre', {
-                                rules: [{ required: true, message: 'Ingrese su nombre de nombre!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    placeholder="Nombre"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('apellido', {
-                                rules: [{ required: true, message: 'Ingrese su nombre de Apellido!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    placeholder="Apellido"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('username', {
-                                rules: [{ required: true, message: 'Ingrese su nombre de usuario!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    placeholder="Nombre de usuario que usara para iniciar sesion"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('password', {
-                                rules: [{ required: true, message: 'Ingrese su contraseña!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    type="password"
-                                    placeholder="Contraseña"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('email', {
-                                rules: [{ required: true, message: 'Ingrese su email!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    type="email"
-                                    placeholder="Direccion de correo electronico"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('cuit', {
-                                rules: [{ required: true, message: 'Ingrese su CUIT!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    type="number"
-                                    placeholder="CUIT sin guion y espacios"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('celular', {
-                                rules: [{ required: true, message: 'Ingrese su celular!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    type="number"
-                                    placeholder="Numero de Celular sin simbolos {caracteristica}{numero} ej: 3718577823"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
+                        : <Form onSubmit={handleSubmit} className="login-form">
+                            <Form.Item>
+                                {getFieldDecorator('nombre', {
+                                    rules: [{ required: true, message: 'Ingrese su nombre de nombre!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                        placeholder="Nombre"
+                                    />,
+                                )}
+                            </Form.Item>
+                            <Form.Item>
+                                {getFieldDecorator('apellido', {
+                                    rules: [{ required: true, message: 'Ingrese su nombre de Apellido!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                        placeholder="Apellido"
+                                    />,
+                                )}
+                            </Form.Item>
+                            <Form.Item>
+                                {getFieldDecorator('username', {
+                                    rules: [{ required: true, message: 'Ingrese su nombre de usuario!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                        placeholder="Nombre de usuario que usara para iniciar sesion"
+                                    />,
+                                )}
+                            </Form.Item>
+                            <Form.Item>
+                                {getFieldDecorator('password', {
+                                    rules: [{ required: true, message: 'Ingrese su contraseña!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                        type="password"
+                                        placeholder="Contraseña"
+                                    />,
+                                )}
+                            </Form.Item>
+                            <Form.Item>
+                                {getFieldDecorator('email', {
+                                    rules: [{ required: true, message: 'Ingrese su email!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                        type="email"
+                                        placeholder="Direccion de correo electronico"
+                                    />,
+                                )}
+                            </Form.Item>
+                            <Form.Item>
+                                {getFieldDecorator('cuit', {
+                                    rules: [{ required: true, message: 'Ingrese su CUIT!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                        type="number"
+                                        placeholder="CUIT sin guion y espacios"
+                                    />,
+                                )}
+                            </Form.Item>
+                            <Form.Item>
+                                {getFieldDecorator('celular', {
+                                    rules: [{ required: true, message: 'Ingrese su celular!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                        type="number"
+                                        placeholder="Numero de Celular sin simbolos {caracteristica}{numero} ej: 3718577823"
+                                    />,
+                                )}
+                            </Form.Item>
+                            <Form.Item>
 
-                            <Row></Row>
-                            <Button type="primary" htmlType="submit" className="login-form-button" >
-                                Iniciar
+                                <Row></Row>
+                                <Button type="primary" htmlType="submit" className="login-form-button" >
+                                    Iniciar
                             </Button>
-                        </Form.Item>
-                    </Form>
-            }
-
-
-        </div>
+                            </Form.Item>
+                        </Form>
+                }
+            </Col>
+        </Row>
 
     );
 }
