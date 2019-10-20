@@ -6,7 +6,7 @@
     "@ant-design/aliyun-theme": "^0.0.3",
     "@ant-design/dark-theme": "^1.0.3",
     "@types/react-highlight-words": "^0.16.0",
-    "antd": "^3.24.1",
+    "antd": "^3.24.2",
     "axios": "^0.19.0",
     "jspdf": "^1.5.3",
     "react": "^16.10.2",

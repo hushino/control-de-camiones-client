@@ -10,11 +10,36 @@ const { Header, Footer, Sider, Content } = Layout;
 function InspectorPanel(props) {
 
     const [imagestate, setImagestate] = useState({ loading: false })
+    //const [state, setState] = useState()
+    let state = 0
+    let state2 = 0
     const [imagestate2, setImagestate2] = useState({ loading: false })
     const [uploadImage, setUploadImage] = useState({})
     const [uploadImage2, setUploadImage2] = useState({})
     const { getFieldDecorator } = props.form;
-
+    /*   const handleChange = info => {
+          let fileList = [...info.fileList];
+  
+          // 1. Limit the number of uploaded files
+          // Only to show two recent uploaded files, and old ones will be replaced by the new
+          fileList = fileList.slice(-2);
+  
+          // 2. Read from response and show file link
+          fileList = fileList.map(file => {
+              if (file.response) {
+                  // Component will show file.url as link
+                  file.url = file.response.url;
+              }
+              return file;
+          });
+  
+          setState({ fileList });
+      }; */
+    /*  props = {
+         action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+         onChange: handleChange,
+         multiple: true,
+     } */
     const payload = {
         patente: "nombrefake",
         cuit: "nombrefake",
@@ -64,10 +89,7 @@ function InspectorPanel(props) {
     }
     //useEffect(() => { }, []);
     const handleChange = info => {
-        /* if (payload.nombre === "" || isNaN(payload.nombre) || payload.nombre === null) {
-            message.error('Escribe un nombre primero !');
-            return;
-        } */
+
         if (info.file.status === 'uploading') {
             setImagestate({ loading: true });
             return;
@@ -133,23 +155,69 @@ function InspectorPanel(props) {
         .catch(function (error) {
             console.log(error);
         })
-
-    const postImage = (bodyFormDataPatente, bodyFormDataCamion) => axios.post("http://localhost:3004/upload", bodyFormDataPatente, bodyFormDataCamion)
+    const postImage2 = (bodyFormDataCamion) => axios.post("http://localhost:3004/upload", bodyFormDataCamion)
+        .then(function (response) {
+            console.log(response.data.filename)
+            //if (response.data.filename !== undefined) {
+            payload.fotocamion = response.data.filename
+            //}
+            postData()
+            //payload.foto = response.data.filename
+        })
+        .catch(function (response) {
+            console.log(response);
+        })
+    const postImage = (bodyFormDataPatente, bodyFormDataCamion) => axios.post("http://localhost:3004/upload", bodyFormDataPatente)
         .then(function (response) {
             console.log(response.data.filename)
             if (response.data.filename !== undefined) {
-                payload.fotocamion = response.data.filename
+                // payload.fotocamion = response.data.filename
                 payload.fotopatente = response.data.filename
             }
+
             postData()
-
-
+            //postImage2(bodyFormDataCamion)
             //payload.foto = response.data.filename
         })
         .catch(function (response) {
             console.log(response);
         })
 
+    const onClickHandler = (data, data2) => {
+        /* const data = new FormData()
+        for (var x = 0; x < this.state.selectedFile.length; x++) {
+            data.append('file', this.state.selectedFile[x])
+        } */
+
+        axios.post("http://localhost:3004/upload", data, {
+            // receive two    parameter endpoint url ,form data
+        }).then(res => { // then print response status
+            //console.log(res.statusText)
+            console.log(res.data)
+            //console.log(res)
+            payload.fotopatente = res.data[0].filename
+            payload.fotocamion = res.data[0].filename
+
+            onClickHandler2(data2)
+        })
+    }
+    const onClickHandler2 = (data2) => {
+        /* const data = new FormData()
+        for (var x = 0; x < this.state.selectedFile.length; x++) {
+            data.append('file', this.state.selectedFile[x])
+        } */
+
+        axios.post("http://localhost:3004/upload", data2, {
+            // receive two    parameter endpoint url ,form data
+        }).then(res => { // then print response status
+            //console.log(res.statusText)
+            console.log(res.data)
+            //console.log(res)
+            payload.fotocamion = res.data[0].filename
+
+            postData()
+        })
+    }
 
     const { imageUrl } = imagestate;
     const { imageUrl2 } = imagestate2;
@@ -162,25 +230,53 @@ function InspectorPanel(props) {
                 payload.cuit = values.cuit
                 payload.vehiculomodelo = values.vehiculomodelo
                 payload.infoadicional = values.infoadicional
+
+                //  const data = new FormData()
+                //data.append('file', state.selectedFile)
+                const data = new FormData()
+                for (let x = 0; x < state.selectedFile.length; x++) {
+                    data.append('file', state.selectedFile[x])
+                }
+                const data2 = new FormData()
+                for (let x = 0; x < state2.selectedFile.length; x++) {
+                    data2.append('file', state2.selectedFile[x])
+                }
                 /*payload.fotocamion = values.fotocamion
                  payload.fotopatente = values.fotopatente*/
-
-                for (let value of uploadImage.getAll('image')) {
-                    console.log('asd ' + value);
-                    bodyFormDataPatente.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
-                    setUploadImage(bodyFormDataPatente)
-
-                }
-                for (let value of uploadImage2.getAll('image2')) {
-                    console.log('asd2 ' + value);
-                    bodyFormDataCamion.append('image2', new Blob([value], { type: 'image/jpg' }), payload.cuit + "AAAA" + payload.patente);
-                    setUploadImage2(bodyFormDataCamion)
-                }
-                postImage(bodyFormDataPatente, bodyFormDataCamion)
+                /* 
+                                for (let value of uploadImage.getAll('image')) {
+                                    console.log('asd ' + value);
+                                    bodyFormDataPatente.append('image', new Blob([value], { type: 'image/jpg' }), payload.cuit + payload.patente);
+                                    setUploadImage(bodyFormDataPatente)
+                                }
+                                for (let value2 of uploadImage2.getAll('image')) {
+                                    console.log('asd2 ' + value2);
+                                    bodyFormDataCamion.append('image2', new Blob([value2], { type: 'image/jpg' }), payload.cuit + "AAAA" + payload.patente);
+                                    setUploadImage2(bodyFormDataCamion)
+                                } */
+                //postImage(bodyFormDataPatente, bodyFormDataCamion)
+                onClickHandler(data, data2)
             }
         });
     };
-
+    const onChangeHandler3 = event => {
+        console.log(event.target.files[0])
+        //console.log(event.target.files[1])
+        //console.log(event.target.files[2])
+        state = ({
+            selectedFile: event.target.files,
+            //selectedFile: event.target.files[0]
+        })
+    }
+    const onChangeHandler2 = event => {
+        console.log(event.target.files[0])
+        //console.log(event.target.files[1])
+        //console.log(event.target.files[2])
+        state2 = ({
+            selectedFile: event.target.files,
+            //selectedFile: event.target.files[0]
+        })
+    }
 
     return (
         <div>
@@ -236,8 +332,19 @@ function InspectorPanel(props) {
                                 />,
                             )}
                         </Form.Item>
+                        {/*  <Form.Item label="Foto de patente" >
+                            {getFieldDecorator('fotopatente', {
+                                rules: [{ required: true, message: 'Suba un archivo' }],
+                            })(
+                                <Upload {...props} fileList={state.fileList}>
+                                    <Button>
+                                        <Icon type="upload" /> Upload
+                         </Button>
+                                </Upload>
+                            )}
+                        </Form.Item> */}
 
-                        <Form.Item label="Foto de patente" >
+                        {/*  <Form.Item label="Foto de patente" >
                             {getFieldDecorator('fotopatente', {
                                 rules: [{ required: true, message: 'Suba un archivo' }],
                             })(
@@ -270,11 +377,19 @@ function InspectorPanel(props) {
                                     {imageUrl2 ? <img src={imageUrl2} alt="avatar" style={{ width: '100%' }} /> : uploadButton2}
                                 </Upload>,
                             )}
-                        </Form.Item>
+                        </Form.Item> */}
 
+                        <div className="form-group files">
+                            <label>Subir foto de patente</label>
+                            <input onChange={onChangeHandler3} multiple type="file" className="form-control" />
+                        </div>
+                        <div className="form-group files">
+                            <label>Subir foto del camion</label>
+                            <input onChange={onChangeHandler2} multiple type="file" className="form-control" />
+                        </div>
                         <Form.Item>
                             <Row></Row>
-                            <Button type="primary" htmlType="submit" className="update-form-button" >
+                            <Button /*  onClick={onClickHandler} */ type="primary" htmlType="submit" className="update-form-button" >
                                 Enviar
                             </Button>
                         </Form.Item>
