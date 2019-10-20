@@ -42,11 +42,12 @@ function InspectorPanel(props) {
      } */
     const payload = {
         patente: "nombrefake",
-        cuit: "nombrefake",
+        cuit: 4321,
         infoadicional: "nombrefakefoto",
         fotocamion: "nombre",
         fotopatente: "nombre",
         vehiculomodelo: "nombre",
+        celular: 4324,
     }
 
     function beforeUpload(file) {
@@ -230,6 +231,7 @@ function InspectorPanel(props) {
                 payload.cuit = values.cuit
                 payload.vehiculomodelo = values.vehiculomodelo
                 payload.infoadicional = values.infoadicional
+                payload.celular = values.celular
 
                 //  const data = new FormData()
                 //data.append('file', state.selectedFile)
@@ -298,7 +300,7 @@ function InspectorPanel(props) {
                             })(
                                 <Input
                                     name="text"
-                                    placeholder="patente"
+                                    placeholder="Patente"
                                 />,
                             )}
                         </Form.Item>
@@ -307,8 +309,18 @@ function InspectorPanel(props) {
                                 rules: [{ required: true, message: 'Ingrese un dato!' }],
                             })(
                                 <Input
-                                    type="text"
+                                    type="number"
                                     placeholder="cuit"
+                                />,
+                            )}
+                        </Form.Item>
+                        <Form.Item label="Celular">
+                            {getFieldDecorator('cuit', {
+                                rules: [{ required: true, message: 'Ingrese un dato!' }],
+                            })(
+                                <Input
+                                    type="number"
+                                    placeholder="Numero de celular"
                                 />,
                             )}
                         </Form.Item>
@@ -318,7 +330,7 @@ function InspectorPanel(props) {
                             })(
                                 <Input
                                     type="text"
-                                    placeholder="infoadicional"
+                                    placeholder="Info adicional"
                                 />,
                             )}
                         </Form.Item>
@@ -328,7 +340,7 @@ function InspectorPanel(props) {
                             })(
                                 <Input
                                     type="text"
-                                    placeholder="vehiculomodelo"
+                                    placeholder="Modelo de Vehiculo"
                                 />,
                             )}
                         </Form.Item>

@@ -54,7 +54,7 @@ function Login(props) {
     e.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-        payload.usernameOrEmail = values.username;
+        payload.usernameOrEmail = values.usernameOrEmail;
         payload.password = values.password;
         forceUpdate();
         fetchData();
@@ -80,12 +80,12 @@ function Login(props) {
             </Button>
           : <Form onSubmit={handleSubmit} className="login-form">
             <Form.Item>
-              {getFieldDecorator('username', {
+              {getFieldDecorator('usernameOrEmail', {
                 rules: [{ required: true, message: 'Ingrese su nombre de usuario!' }],
               })(
                 <Input
                   prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  placeholder="Usuario"
+                  placeholder="Usuario o Email"
                 />,
               )}
             </Form.Item>
