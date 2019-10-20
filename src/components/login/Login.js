@@ -58,7 +58,7 @@ function Login(props) {
         payload.password = values.password;
         forceUpdate();
         fetchData();
-        setTimeout(function () { window.location.reload(); }, 1200);
+        setTimeout(function () { window.location.reload(); }, 1000);//1200
         //window.location.reload();
       }
     });

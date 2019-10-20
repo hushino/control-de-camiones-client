@@ -7,7 +7,8 @@ const { Meta } = Card;
 const { Header, Footer, Sider, Content } = Layout;
 
 function ContribuyentePanel() { //${dataIndex}
-    const postData = () => axios.get(`http://localhost:8081/api/getInspectorPostForContribuyenteByCuit/543534543`)
+    const cuit = localStorage.getItem("cuit");
+    const postData = () => axios.get(`http://localhost:8081/api/getInspectorPostForContribuyenteByCuit/${cuit}`)
         .then(function (response) {
             console.log(response.data)
         })

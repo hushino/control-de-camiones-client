@@ -7,14 +7,13 @@ const myReducer = (state = initialState, action) => {
         case 0:
             //state.Authorization = action.stateOfLife.accessToken
             let role = '';
-
             action.stateOfLife.roles.forEach(element => {
                 role = element.authority
-
             });
             localStorage.setItem("authorization", 'Bearer ' + action.stateOfLife.accessToken);
+            localStorage.setItem("cuit", action.stateOfLife.cuit);
             localStorage.setItem("nombreusuario", action.stateOfLife.nombreusuario);
-            //console.log(action.stateOfLife.accessToken)
+            console.log(action.stateOfLife)
             return {
                 Authorization: 'Bearer ' + action.stateOfLife.accessToken,
                 Role: role
