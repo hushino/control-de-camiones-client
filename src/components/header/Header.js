@@ -15,7 +15,7 @@ function Header() {
   const isRoleAdmin = localStorage.getItem("role") === 'ADMIN';
   const isRoleCONTRIBUYENTE = localStorage.getItem("role") === 'CONTRIBUYENTE';
   const isRoleINSPECTOR = localStorage.getItem("role") === 'INSPECTOR';
-
+  const isAnyRole = localStorage.getItem("role") === 'ADMIN' || localStorage.getItem("role") === "CONTRIBUYENTE" || localStorage.getItem("role") === "INSPECTOR";
   const [state, setState] = useState();
 
   //useEffect(() => {}, []);
@@ -34,12 +34,16 @@ function Header() {
                   Inicio
                 </Link>
               </Menu.Item>
-              <Menu.Item key="registro" >
-                <Link to="/registro">
-                  <Icon type="home" />
-                  Registrarse
+              {isAnyRole
+                ? ""
+                : <Menu.Item key="registro" >
+                  <Link to="/registro">
+                    <Icon type="home" />
+                    Registrarse
                 </Link>
-              </Menu.Item>
+                </Menu.Item>
+              }
+
               {
                 isRoleCONTRIBUYENTE
                   ? <Menu.Item key="contribuyente" >

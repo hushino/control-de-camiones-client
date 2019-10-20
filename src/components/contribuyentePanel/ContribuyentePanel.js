@@ -6,9 +6,15 @@ import axios from 'axios';
 const { Meta } = Card;
 const { Header, Footer, Sider, Content } = Layout;
 
-function ContribuyentePanel() {
-    
-
+function ContribuyentePanel() { //${dataIndex}
+    const postData = () => axios.get(`http://localhost:8081/api/getInspectorPostForContribuyenteByCuit/543534543`)
+        .then(function (response) {
+            console.log(response.data)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    postData()
     return (
         <div>
             <Layout style={{ height: "calc(100vh - 55px)" }}>
@@ -17,8 +23,8 @@ function ContribuyentePanel() {
                         <Col>
                             <Link to={`/verautorizaciones`}>Ver autorizaciones</Link>
                         </Col>
-                    </Row> 
-                    
+                    </Row>
+
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Red Design ©2019 Created by Hushino</Footer>
             </Layout>
