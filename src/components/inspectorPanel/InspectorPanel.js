@@ -315,7 +315,7 @@ function InspectorPanel(props) {
                             )}
                         </Form.Item>
                         <Form.Item label="Celular">
-                            {getFieldDecorator('cuit', {
+                            {getFieldDecorator('celular', {
                                 rules: [{ required: true, message: 'Ingrese un dato!' }],
                             })(
                                 <Input
