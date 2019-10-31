@@ -408,6 +408,7 @@ function InspectorPanel(props) {
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Red Design ©2019 Created by Hushino</Footer>
             </Layout>
+            
         </div>
     )
 }
