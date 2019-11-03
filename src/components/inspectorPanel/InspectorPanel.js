@@ -120,14 +120,14 @@ function InspectorPanel(props) {
                         payload.append('file', state.selectedFile[x])
                     }
                 } else {
-                    payload.foto = nameRef.current
+                    payload.fotocamion = nameRef.current
                 }
-                if (state.selectedFile != null /* && this.state.selectedFile.length < 1 */) {
-                    for (let x = 0; x < state.selectedFile.length; x++) {
-                        payload.append('file', state.selectedFile[x])
+                if (state2.selectedFile != null /* && this.state.selectedFile.length < 1 */) {
+                    for (let x = 0; x < state2.selectedFile.length; x++) {
+                        payload.append('file', state2.selectedFile[x])
                     }
                 } else {
-                    payload.foto = nameRef.current
+                    payload.fotopatente = nameRef2.current
                 }
                 payload.patente = values.patente
                 payload.cuit = values.cuit
@@ -234,7 +234,7 @@ function InspectorPanel(props) {
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Red Design ©2019 Created by Hushino</Footer>
             </Layout>
-            
+
         </div>
     )
 }
